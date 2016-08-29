@@ -97,15 +97,18 @@ def GetVM(si, vmname):
 		if vm.name == vmname:
 			return vm
 
-def CloneVM(vm):
-	if isinstance(vm, vim.VirtualMachine) == False:
+def CloneVM(vm, name):
+	if isinstance(vm, vim.VirtualMachine) is False:
 		# Argument 'vm' is not a virtual machine.
 		raise Exception("Argument 'vm' is not an instance of vim.VirtualMachine'", vm)
 	
 	if vm.runtime.powerState != 'poweredOn':
 		raise Exception("VM not powered on", vm)
 
-	child = fork.CreateChildVm(vm, 'Photon-Child', persistent=False)
+	if isinstance(name, str) is False:
+		raise Exception("Name is not a string")
+
+	child = fork.CreateChildVm(vm, name, persistent=False)
 	if not child:
 		raise Exception("Error cloning VM", child)
 
@@ -120,5 +123,5 @@ if __name__ == "__main__":
 	WaitForTasks([task], si)
 	print("VM forking enabled")
 	print("Attempting to clone vm...")
-	child = CloneVM(vm)
+	child = CloneVM(vm, 'Photon-Child')
 	print("Child cloned: " + child.name)
