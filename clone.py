@@ -1,4 +1,6 @@
 # Code shamelessly stolen from https://github.com/vmware/pyvmomi/blob/master/sample/poweronvm.py
+#
+
 
 from pyVim.connect import SmartConnect, Disconnect
 from pyVmomi import vim, vmodl
