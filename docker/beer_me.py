@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify, make_response
 
+import uuid
+
 # Initiate Flask
 app = Flask(__name__)
+
+# Generate a "short" uuid for this instance
+uid = str(uuid.uuid4())[:8]
 
 @app.route('/api/beer', methods=['GET'])
 def get_some():
@@ -12,7 +17,8 @@ def get_some():
     payload = {
         "Cost": "Free",
         "Temp": "Cold",
-        "Brand": "Who Cares?"
+        "Brand": "Who Cares?",
+		"Node": uid
     }
     return jsonify(payload)
 
