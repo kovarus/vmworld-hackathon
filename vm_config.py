@@ -10,13 +10,12 @@ configuration_dict = {"Application":
                             "cpu_threshold_lower": 15,
                             "cpu_threshold_upper": 25,
                             "polling_interval": 20,
-                            "metric_count": 3}]}
+                            "metric_count": 3,
+                            "node_list": []}]}
 
 # here is my fancy database; a python dictionary!
 # We need to update this to a data structure that supports multiple applications
-cpu_monitor = [1,1,1,1,1,1,1,1]
-
-
+# cpu_monitor = [1,1,1,1,1,1,1,1]
 
 def main():
 
@@ -27,20 +26,16 @@ def main():
         current_nodes = "CODETOGETCURRENT"
         if current_nodes < app["min_nodes"]:
             # code to build at least 1 node
+            # update config_dict node_list to include base node
             pass
         else:
             pass
 
     while True:
+
         try:
-            print("Foo")
-            # Code to get current CPU utilization
-
-            # code to update cpu_monitor
-
-
             for app in configuration_dict["Application"]:
-                # Get CPU utilzation
+                # Get CPU utilzation for all instances
 
                 # Change below to get last 3 intervals
                 start = len(cpu_monitor) - 3
@@ -63,8 +58,6 @@ def main():
 
         except KeyboardInterrupt:
             raise
-
-
 
 
 if __name__ == "__main__":
