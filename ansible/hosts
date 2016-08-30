@@ -1,0 +1,2 @@
+[lb]
+10.1.2.69 ansible_ssh_pass=password ansible_sudo_pass='!Passw0rd' ansible_ssh_user=root
