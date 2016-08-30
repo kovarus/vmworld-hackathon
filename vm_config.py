@@ -17,6 +17,48 @@ configuration_dict = {"Application":
 # We need to update this to a data structure that supports multiple applications
 # cpu_monitor = [1,1,1,1,1,1,1,1]
 
+import yaml
+#
+# ---
+# - hosts: lb
+#   remote_user: root
+#
+#   vars:
+#     haproxy_backend_servers:
+#       - name: app1
+#         address: 127.0.0.1:8080
+#       - name: app2
+#         address: 127.0.0.2:8080
+#   roles:
+#     - ansible-role-haproxy
+
+def generate_playbook(node_list):
+
+    backend_servers = []
+
+    new_server = {"name": "foo1", "address": "100.1.1.1:8080"}
+
+    backend_servers.append(new_server)
+
+
+
+    lb_configuration = [
+                        {
+                            "remote_user": "root",
+                            "hosts": "lb",
+                            "vars": {
+                                "haproxy_backend_servers":
+                                  backend_servers
+
+                            },
+                            "roles": [
+                                "ansible-role-haproxy"
+                            ]
+                        }
+                    ]
+
+    print(yaml.dump(lb_configuration))
+
 def main():
 
     # min_nodes = "CODEHERE TO GET CURRENT NODES"
@@ -32,9 +74,15 @@ def main():
             pass
 
     while True:
+        cpu_monitor = []
 
         try:
             for app in configuration_dict["Application"]:
+
+                # generate node list from list of virtual machines
+
+
+
                 # Get CPU utilzation for all instances
 
                 # Change below to get last 3 intervals
@@ -49,6 +97,7 @@ def main():
 
                 if cpu_average >= app["cpu_threshold_max"]:
                     # run code to scale up
+                    # Invoke a process to kick off a run with our yaml playbook
                     pass
                 elif cpu_average < app["cpu_threshold_lower"]:
                     # run code to remove all but one nstance
